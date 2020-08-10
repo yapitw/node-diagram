@@ -30,17 +30,16 @@ const ConnectPoint: React.FC<ConnectPointProps> = (props) => {
             >
                 {name[0].toUpperCase()}
             </text>
-            {hovered && (
-                <text
-                    fontSize={size}
-                    fill="black"
-                    x={isOutput ? -size : size}
-                    y={size / 3}
-                    textAnchor={isOutput ? 'end' : 'start'}
-                >
-                    {name}
-                </text>
-            )}
+
+            <text
+                fontSize={size}
+                fill="black"
+                x={isOutput ? -size : size}
+                y={size / 3}
+                textAnchor={isOutput ? 'end' : 'start'}
+            >
+                {name}
+            </text>
         </g>
     )
 }

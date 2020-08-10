@@ -2,21 +2,21 @@
     "name": "node-system",
     "version": "0.0.0",
     "scripts": {
-        "start": "parcel index.html",
-        "build": "parcel build index.html"
+        "start": "parcel serve ./index.html",
+        "build": "parcel build ./index.html"
     },
     "dependencies": {
         "@pika/react": "^16.13.1",
         "@pika/react-dom": "^16.13.1",
-        "colors.json": "^2.0.0",
         "react": "^16.13.1",
         "react-dom": "^16.13.1"
     },
     "devDependencies": {
+        "@parcel/transformer-sass": "^2.0.0-alpha.3",
         "@types/react": "^16.9.45",
         "@types/react-dom": "^16.9.8",
         "node-sass-json-importer": "^4.3.0",
-        "parcel-bundler": "^1.12.4",
+        "parcel": "^2.0.0-beta.1",
         "sass": "^1.26.10",
         "typescript": "^3.9.7"
     }

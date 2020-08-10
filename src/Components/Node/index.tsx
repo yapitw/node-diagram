@@ -2,7 +2,7 @@ import * as React from 'react'
 import ConnectPoint from './ConnectPoint'
 import NodeVec2 from '../NodeVec2'
 import { DEFAULT_FONTSIZE, DEFAULT_NODE_STYLE } from '../constants'
-import DiagramContext, { ConnectPort } from '../DiagramContext'
+import { ConnectPort } from '../DiagramTypes'
 
 interface NodeProps {
     title?: string

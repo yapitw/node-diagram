@@ -1,26 +1,6 @@
 import * as React from 'react'
 import { DEFAULT_FONTSIZE } from './constants'
-
-export interface ConnectPort {
-    name: string
-    type: string
-}
-export interface NodeData {
-    nid: number
-    type: string
-    x: number
-    y: number
-    fields: {
-        in: ConnectPort[]
-        out: ConnectPort[]
-    }
-}
-
-export interface ConnectionData {
-    from_node: number
-    from: string
-}
-
+import { NodeData, ConnectionData } from './DiagramTypes'
 type DiagramContextState = {
     baseSize: number
     scale: number
