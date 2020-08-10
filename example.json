@@ -1,0 +1,59 @@
+{
+    "nodes": [
+        {
+            "nid": 0,
+            "type": "Timer",
+            "x": 89,
+            "y": 82,
+            "fields": {
+                "in": [
+                    { "name": "reset", "type": "null" },
+                    { "name": "pause", "type": "null" },
+                    { "name": "max", "type": "number" }
+                ],
+                "out": [{ "name": "out", "type": "null" }]
+            }
+        },
+        {
+            "nid": 1,
+            "type": "MathMult",
+            "x": 284,
+            "y": 82,
+            "fields": {
+                "in": [
+                    { "name": "in", "type": "null" },
+                    { "name": "factor", "type": "null" }
+                ],
+                "out": [{ "name": "out", "type": "null" }]
+            }
+        },
+        {
+            "nid": 2,
+            "type": "Vector3",
+            "x": 486,
+            "y": 188,
+            "fields": {
+                "in": [
+                    { "name": "pos", "type": "number" },
+                    { "name": "x", "type": "number" },
+                    { "name": "y", "type": "number" },
+                    { "name": "z", "type": "number" }
+                ],
+                "out": [
+                    { "name": "pos", "type": "number" },
+                    { "name": "x", "type": "number" },
+                    { "name": "y", "type": "number" },
+                    { "name": "z", "type": "number" }
+                ]
+            }
+        }
+    ],
+    "connections": [
+        {
+            "from_node": "nid",
+            "from": "field_name",
+            "to_node": "nid",
+            "to": "field_name"
+        }
+    ]
+}

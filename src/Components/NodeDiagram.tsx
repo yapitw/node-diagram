@@ -1,21 +1,11 @@
 import * as React from 'react'
 import './NodeDiagram.scss'
 import Node from './Node'
-import { colors } from '../Components/colors.json'
+import { DEFAULT_CONTAINER_STYLE, DEFAULT_NODE_STYLE } from './constants'
 const { useEffect, useState, useRef } = React
 
-const DEFAULT_CONTAINER_STYLE = {
-    width: '100%',
-    height: '100%',
-    background: colors.background,
-}
-
-const DEFAULT_NODE_STYLE = {
-    stroke: 'black',
-    strokeWidth: 1.5,
-    fill: colors.background,
-    rx: 5,
-}
+import sampleData from '../../example.json'
+const nodes = sampleData.nodes
 
 interface NodeDiagramProps {
     title?: string
@@ -46,6 +36,7 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
             window.removeEventListener('resize', setSize)
         }
     }, [])
+
     return (
         <div
             ref={containerElem}
@@ -56,11 +47,24 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
             <svg
                 width={windowInfo.width}
                 height={windowInfo.height}
-                viewBox={`${-windowInfo.width / 2} ${-windowInfo.height / 2} ${
-                    windowInfo.width
-                } ${windowInfo.height}`}
+                viewBox={`0 0 ${windowInfo.width} ${windowInfo.height}`}
             >
-                <Node nodeStyle={DEFAULT_NODE_STYLE} />
+                {nodes.map((node) => {
+                    const { nid, type, x, y, fields } = node
+                    const { in: inputs, out: outputs } = fields
+                    return (
+                        <Node
+                            nodeStyle={DEFAULT_NODE_STYLE}
+                            key={nid}
+                            nid={nid}
+                            type={type}
+                            x={x}
+                            y={y}
+                            inputs={inputs}
+                            outputs={outputs}
+                        />
+                    )
+                })}
             </svg>
         </div>
     )

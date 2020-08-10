@@ -9,7 +9,7 @@
         margin: 0;
     }
 
-    font-size: 12px;
+    font-size: 10px;
 
     .diagram_title {
         position: absolute;
@@ -17,13 +17,17 @@
         width: 100%;
         font-size: 2em;
     }
+
     .node_drag_area {
         cursor: move;
+        fill: transparent;
     }
+
     .node_title {
-        font-size: 1.5em;
+        font-size: 1.2em;
         font-weight: bold;
         user-select: none;
+        text-anchor: middle;
     }
 
     .connect_dot {
@@ -31,16 +35,22 @@
             fill: white;
             stroke: black;
             user-select: none;
+            font-size: inherit;
+            transition: transform 100ms;
         }
         text {
             user-select: none;
+            transition: transform 100ms;
         }
         &:hover {
             circle {
-                stroke-width: 2;
+                transform: scale(1.2);
             }
-            text {
-                font-weight: bold;
+        }
+
+        &:active {
+            circle {
+                transform: scale(1.1);
             }
         }
     }
