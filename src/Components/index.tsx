@@ -1,6 +1,6 @@
 import * as React from 'react'
 import './NodeDiagram.scss'
-import Node from './Node'
+import Node from '../Node'
 import DiagramContext, {
     defaultDiagramContext,
     DiagramProvider,
@@ -8,8 +8,8 @@ import DiagramContext, {
 import { DEFAULT_CONTAINER_STYLE } from './constants'
 const { useEffect, useState, useRef } = React
 
-import sampleData from '../../example.json'
-import Connection from './Connection'
+import sampleData from '../../../example.json'
+import Connection from '../Connection'
 const { nodes, connections } = sampleData
 
 interface NodeDiagramProps {
