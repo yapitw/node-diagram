@@ -50,10 +50,10 @@
     ],
     "connections": [
         {
-            "from_node": "nid",
-            "from": "field_name",
-            "to_node": "nid",
-            "to": "field_name"
+            "from_node": 0,
+            "from": "max",
+            "to_node": 1,
+            "to": "in"
         }
     ]
 }

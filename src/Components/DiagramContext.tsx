@@ -49,8 +49,16 @@ type DiagramContextValue = [
 
 const DiagramContext = React.createContext<DiagramContextValue>(undefined)
 
-export const DiagramProvider: React.FC = (props) => {
-    const [state, setState] = React.useState(defaultDiagramContext)
+export const DiagramProvider: React.FC<{
+    nodes: NodeData[]
+    connections: ConnectionData[]
+}> = (props) => {
+    const { nodes, connections } = props
+    const [state, setState] = React.useState({
+        ...defaultDiagramContext,
+        nodes,
+        connections,
+    })
 
     return (
         <DiagramContext.Provider value={[state, setState]}>
@@ -62,7 +70,23 @@ export const DiagramProvider: React.FC = (props) => {
 export const useDiagramProvider = () => {
     const [state, setState] = React.useContext(DiagramContext)
 
-    const updateNodeUIState = (nid, newState) => {}
+    const updateNodeUIState = (nid, newState) => {
+        setState((state) => {
+            const nodeUIState = {
+                ...state.nodeUIState,
+                [nid]: newState,
+            }
+            return {
+                ...state,
+                ...nodeUIState,
+            }
+        })
+    }
+
+    return {
+        state,
+        updateNodeUIState,
+    }
 }
 
 export default DiagramContext

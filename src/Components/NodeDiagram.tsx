@@ -1,15 +1,12 @@
 import * as React from 'react'
 import './NodeDiagram.scss'
-import Node from '../Node'
-import DiagramContext, {
-    defaultDiagramContext,
-    DiagramProvider,
-} from './DiagramContext'
+import { DiagramProvider } from './DiagramContext'
 import { DEFAULT_CONTAINER_STYLE } from './constants'
 const { useEffect, useState, useRef } = React
 
-import sampleData from '../../../example.json'
-import Connection from '../Connection'
+import sampleData from '../../example.json'
+import NodeContainer from './NodeContainer'
+import ConnectionContainer from './ConnectionContainer'
 const { nodes, connections } = sampleData
 
 interface NodeDiagramProps {
@@ -37,7 +34,6 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
     useEffect(() => {
         setSize()
         window.addEventListener('resize', setSize)
-        // setDiagramState({ baseSize: 10 })
 
         return () => {
             window.removeEventListener('resize', setSize)
@@ -56,31 +52,11 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
                 height={windowInfo.height}
                 viewBox={`0 0 ${windowInfo.width} ${windowInfo.height}`}
             >
-                {nodes.map((node) => {
-                    const { nid, type, x, y, fields } = node
-                    const { in: inputs, out: outputs } = fields
-                    return (
-                        <Node
-                            key={nid}
-                            nid={nid}
-                            type={type}
-                            title={type}
-                            x={x}
-                            y={y}
-                            inputs={inputs}
-                            outputs={outputs}
-                        />
-                    )
-                })}
-
-                <g>
-                    {connections.map((connection, index) => {
-                        const { from, to } = connection
-                        return <Connection key={index} />
-                    })}
-                </g>
+                <DiagramProvider nodes={nodes} connections={connections}>
+                    <NodeContainer />
+                    <ConnectionContainer />
+                </DiagramProvider>
             </svg>
-            <DiagramProvider />
         </div>
     )
 }
