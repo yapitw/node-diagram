@@ -1,11 +1,16 @@
 import * as React from 'react'
 import './NodeDiagram.scss'
 import Node from './Node'
-import { DEFAULT_CONTAINER_STYLE, DEFAULT_NODE_STYLE } from './constants'
+import DiagramContext, {
+    defaultDiagramContext,
+    DiagramProvider,
+} from './DiagramContext'
+import { DEFAULT_CONTAINER_STYLE } from './constants'
 const { useEffect, useState, useRef } = React
 
 import sampleData from '../../example.json'
-const nodes = sampleData.nodes
+import Connection from './Connection'
+const { nodes, connections } = sampleData
 
 interface NodeDiagramProps {
     title?: string
@@ -14,7 +19,7 @@ interface NodeDiagramProps {
 }
 
 const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
-    const { title, className, containerStyle = DEFAULT_CONTAINER_STYLE } = props
+    const { title, className, containerStyle = {} } = props
 
     const containerElem = useRef<HTMLDivElement>(null)
     const [windowInfo, setWindowInfo] = useState({
@@ -32,6 +37,8 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
     useEffect(() => {
         setSize()
         window.addEventListener('resize', setSize)
+        // setDiagramState({ baseSize: 10 })
+
         return () => {
             window.removeEventListener('resize', setSize)
         }
@@ -40,8 +47,8 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
     return (
         <div
             ref={containerElem}
-            className="node_diagram_styles"
-            style={containerStyle}
+            className={className ?? className + ' ' + 'node_diagram_styles'}
+            style={{ ...DEFAULT_CONTAINER_STYLE, ...containerStyle }}
         >
             {title && <h1 className="diagram_title">{title}</h1>}
             <svg
@@ -54,10 +61,10 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
                     const { in: inputs, out: outputs } = fields
                     return (
                         <Node
-                            nodeStyle={DEFAULT_NODE_STYLE}
                             key={nid}
                             nid={nid}
                             type={type}
+                            title={type}
                             x={x}
                             y={y}
                             inputs={inputs}
@@ -65,7 +72,15 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
                         />
                     )
                 })}
+
+                <g>
+                    {connections.map((connection, index) => {
+                        const { from, to } = connection
+                        return <Connection key={index} />
+                    })}
+                </g>
             </svg>
+            <DiagramProvider />
         </div>
     )
 }

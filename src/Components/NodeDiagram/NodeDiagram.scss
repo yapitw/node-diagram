@@ -1,6 +1,5 @@
-// @import './colors.json';
-
 .node_diagram_styles {
+    --node-font-size: 12;
     h1,
     h2,
     h3,
@@ -9,7 +8,7 @@
         margin: 0;
     }
 
-    font-size: 10px;
+    font-size: calc(var(--node-font-size) * 1px);
 
     .diagram_title {
         position: absolute;
@@ -24,7 +23,7 @@
     }
 
     .node_title {
-        font-size: 1.2em;
+        font-size: 1em;
         font-weight: bold;
         user-select: none;
         text-anchor: middle;
@@ -41,6 +40,9 @@
         text {
             user-select: none;
             transition: transform 100ms;
+            &:first-of-type {
+                font-weight: bold;
+            }
         }
         &:hover {
             circle {

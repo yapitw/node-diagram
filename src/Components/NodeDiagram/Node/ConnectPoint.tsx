@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { DEFAULT_FONTSIZE } from './constants'
+import { DEFAULT_FONTSIZE } from '../constants'
 
 interface ConnectPointProps {
     name: string
@@ -25,17 +25,17 @@ const ConnectPoint: React.FC<ConnectPointProps> = (props) => {
                 fontSize={size}
                 fill="black"
                 x={0}
-                y={size / 3.75}
+                y={size / 3}
                 textAnchor={'middle'}
             >
-                {name[0]}
+                {name[0].toUpperCase()}
             </text>
             {hovered && (
                 <text
                     fontSize={size}
                     fill="black"
                     x={isOutput ? -size : size}
-                    y={size / 3.75}
+                    y={size / 3}
                     textAnchor={isOutput ? 'end' : 'start'}
                 >
                     {name}

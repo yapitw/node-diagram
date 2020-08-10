@@ -1,18 +1,14 @@
 import * as React from 'react'
 import ConnectPoint from './ConnectPoint'
-import NodeVec2 from './NodeVec2'
-import { DEFAULT_FONTSIZE } from './constants'
-interface ConnectPort {
-    name: string
-    type: string
-}
+import NodeVec2 from '../NodeVec2'
+import { DEFAULT_FONTSIZE, DEFAULT_NODE_STYLE } from '../constants'
+import DiagramContext, { ConnectPort } from '../DiagramContext'
 
 interface NodeProps {
     title?: string
-    location?: NodeVec2
     width?: number
     height?: number
-    nodeStyle: React.CSSProperties
+    nodeStyle?: React.CSSProperties
 
     type: string
     fontSize?: number
@@ -28,14 +24,15 @@ const Node: React.FC<NodeProps> = (props) => {
         title = 'untitled',
         width = 150,
         height = 200,
-        nodeStyle,
-        inputs = [],
-        outputs = [],
+        nodeStyle = DEFAULT_NODE_STYLE,
         x = 0,
         y = 0,
+        inputs = [],
+        outputs = [],
     } = props
 
-    const fontSize = DEFAULT_FONTSIZE
+    const fontSize = React.useRef(DEFAULT_FONTSIZE)
+
     const titleElem = React.useRef<SVGTextElement>(null)
 
     const [location, setLocation] = React.useState<NodeVec2>(new NodeVec2())
@@ -78,13 +75,13 @@ const Node: React.FC<NodeProps> = (props) => {
     return (
         <g
             transform={`translate(${location.x} ${location.y})`}
-            style={{ fontSize }}
+            style={{ fontSize: fontSize.current }}
         >
             <rect width={size.x} height={height} style={nodeStyle} />
 
             <rect
                 width={size.x}
-                height={fontSize * 2}
+                height={fontSize.current * 2}
                 className="node_drag_area"
                 onMouseDown={moveStartHandler}
             />
@@ -92,22 +89,24 @@ const Node: React.FC<NodeProps> = (props) => {
             <text
                 ref={titleElem}
                 x={size.x / 2}
-                y={fontSize * 1.5}
+                y={fontSize.current * 1.5}
                 className="node_title"
                 onMouseDown={moveStartHandler}
             >
                 {title}
             </text>
 
-            <g transform={`translate(0 ${fontSize * 3})`}>
+            <g transform={`translate(0 ${fontSize.current * 3})`}>
                 {inputs.map((input, index) => {
                     const { name, type } = input
                     return (
                         <ConnectPoint
                             key={name}
                             name={name}
-                            transform={`translate(0 ${index * 2 * fontSize})`}
-                            size={fontSize}
+                            transform={`translate(0 ${
+                                index * 2 * fontSize.current
+                            })`}
+                            size={fontSize.current}
                         />
                     )
                 })}
@@ -115,7 +114,7 @@ const Node: React.FC<NodeProps> = (props) => {
 
             <g
                 transform={`translate(${size.x} ${
-                    size.y - (outputs.length - 0.5) * 2 * fontSize
+                    size.y - (outputs.length - 0.5) * 2 * fontSize.current
                 })`}
             >
                 {outputs.map((output, index) => {
@@ -124,8 +123,10 @@ const Node: React.FC<NodeProps> = (props) => {
                         <ConnectPoint
                             key={name}
                             name={name}
-                            transform={`translate(0 ${index * 2 * fontSize})`}
-                            size={fontSize}
+                            transform={`translate(0 ${
+                                index * 2 * fontSize.current
+                            })`}
+                            size={fontSize.current}
                             isOutput
                         />
                     )
