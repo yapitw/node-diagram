@@ -1,19 +1,22 @@
 {
-  "name": "node-system",
-  "version": "0.0.0",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build"
-  },
-  "dependencies": {
-    "@pika/react": "^16.13.1",
-    "@pika/react-dom": "^16.13.1"
-  },
-  "devDependencies": {
-    "@types/react": "^16.9.45",
-    "@types/react-dom": "^16.9.8",
-    "sass": "^1.26.10",
-    "vite": "^1.0.0-rc.1",
-    "vite-plugin-react": "^3.0.0"
-  }
+    "name": "node-system",
+    "version": "0.0.0",
+    "scripts": {
+        "start": "parcel index.html",
+        "build": "parcel build index.html"
+    },
+    "dependencies": {
+        "@pika/react": "^16.13.1",
+        "@pika/react-dom": "^16.13.1",
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1"
+    },
+    "devDependencies": {
+        "@types/react": "^16.9.45",
+        "@types/react-dom": "^16.9.8",
+        "node-sass-json-importer": "^4.3.0",
+        "parcel-bundler": "^1.12.4",
+        "sass": "^1.26.10",
+        "typescript": "^3.9.7"
+    }
 }

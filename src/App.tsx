@@ -1,15 +1,13 @@
-import React, { useState } from "react";
-import "./App.css";
-import NodeDiagram from "./Components/NodeDiagram";
+import * as React from 'react'
+import './App.css'
+import NodeDiagram from './Components/NodeDiagram'
 
-function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <div className="App">
-      <NodeDiagram title="NODE DIAGRAM" />
-    </div>
-  );
+const App = () => {
+    return (
+        <div className="App">
+            <NodeDiagram title="NODE DIAGRAM" />
+        </div>
+    )
 }
 
-export default App;
+export default App

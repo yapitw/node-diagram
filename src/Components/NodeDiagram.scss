@@ -1,9 +1,47 @@
+// @import './colors.json';
+
 .node_diagram_styles {
-	h1,
-	h2,
-	h3,
-	h4,
-	h5 {
-		margin: 0;
-	}
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+        margin: 0;
+    }
+
+    font-size: 12px;
+
+    .diagram_title {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        font-size: 2em;
+    }
+    .node_drag_area {
+        cursor: move;
+    }
+    .node_title {
+        font-size: 1.5em;
+        font-weight: bold;
+        user-select: none;
+    }
+
+    .connect_dot {
+        circle {
+            fill: white;
+            stroke: black;
+            user-select: none;
+        }
+        text {
+            user-select: none;
+        }
+        &:hover {
+            circle {
+                stroke-width: 2;
+            }
+            text {
+                font-weight: bold;
+            }
+        }
+    }
 }
