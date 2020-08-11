@@ -6,10 +6,6 @@
         "module": "ES6",
         "target": "es5",
         "jsx": "react",
-        "plugins": [
-            {
-                "name": "typescript-plugin-css-modules"
-            }
-        ]
+        "allowSyntheticDefaultImports": true
     }
 }
