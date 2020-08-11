@@ -14,9 +14,11 @@
     },
     "devDependencies": {
         "@parcel/transformer-sass": "^2.0.0-alpha.3",
+        "@teamsupercell/typings-for-css-modules-loader": "^2.2.1",
         "@types/react": "^16.9.45",
         "@types/react-dom": "^16.9.8",
         "css-loader": "^4.2.1",
+        "css-modules-typescript-loader": "^4.0.0",
         "json-loader": "^0.5.7",
         "node-sass-json-importer": "^4.3.0",
         "sass": "^1.26.10",

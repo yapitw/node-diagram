@@ -24,6 +24,7 @@ module.exports = {
                 test: /\.styl$/i,
                 use: [
                     { loader: 'style-loader' },
+                    '@teamsupercell/typings-for-css-modules-loader',
                     {
                         loader: 'css-loader',
                         options: {
