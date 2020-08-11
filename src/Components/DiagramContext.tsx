@@ -50,7 +50,10 @@ export const DiagramProvider: React.FC<{
 export const useDiagramProvider = () => {
     const [state, setState] = React.useContext(DiagramContext)
 
-    const updateNodeUIState = (nid, newState) => {
+    const updateNodeUIState = (
+        nid: number,
+        newState: { width: number; height: number },
+    ) => {
         setState((state) => {
             const nodeUIState = {
                 ...state.nodeUIState,

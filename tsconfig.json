@@ -1,15 +1,15 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "noImplicitAny": true,
-        "removeComments": true,
-        "preserveConstEnums": true,
+        "outDir": "./dist/",
         "sourceMap": true,
-        "isolatedModules": true,
-        "resolveJsonModule": true
-    },
-    "include": [
-        "src/**/*.ts",
-        "src/custom.d.ts"
-    ]
+        "noImplicitAny": true,
+        "module": "ES6",
+        "target": "es5",
+        "jsx": "react",
+        "plugins": [
+            {
+                "name": "typescript-plugin-css-modules"
+            }
+        ]
+    }
 }

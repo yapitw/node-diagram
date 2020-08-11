@@ -1,0 +1,29 @@
+.node_diagram_styles {
+    --node-font-size: 12;
+
+    h1, h2, h3, h4, h5 {
+        margin: 0;
+    }
+
+    font-size: calc(var(--node-font-size) * 1px);
+
+    .diagram_title {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        font-size: 2em;
+        pointer-events: none;
+    }
+
+    .node_drag_area {
+        cursor: move;
+        fill: transparent;
+    }
+
+    .node_title {
+        font-size: 1em;
+        font-weight: bold;
+        user-select: none;
+        text-anchor: middle;
+    }
+}

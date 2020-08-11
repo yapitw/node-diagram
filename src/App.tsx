@@ -1,5 +1,5 @@
 import * as React from 'react'
-import './App.css'
+import './App.styl'
 import NodeDiagram from './Components/NodeDiagram'
 
 const App = () => {

@@ -1,6 +1,3 @@
 {
-    "colors": {
-        "red": "#c33",
-        "background": "white"
-    }
+    "nodeBackground": "white"
 }

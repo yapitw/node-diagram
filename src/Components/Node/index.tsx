@@ -61,7 +61,7 @@ const Node: React.FC<NodeProps> = (props) => {
         window.addEventListener('pointerup', moveEndHandler)
     }
 
-    const moveHandler = (event) => {
+    const moveHandler = (event: PointerEvent) => {
         const movement = new NodeVec2(event.movementX, event.movementY)
         setLocation((location) => location.add(movement))
     }

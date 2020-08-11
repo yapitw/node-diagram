@@ -1,12 +1,12 @@
 import * as React from 'react'
-import './NodeDiagram.scss'
 import { DiagramProvider } from './DiagramContext'
 import { DEFAULT_CONTAINER_STYLE } from './constants'
-const { useEffect, useState, useRef } = React
-
-import sampleData from '../../example.json'
 import NodeContainer from './NodeContainer'
 import ConnectionContainer from './ConnectionContainer'
+import styles from './NodeDiagram.styl'
+import sampleData from '../../example.json'
+
+const { useEffect, useState, useRef } = React
 const { nodes, connections } = sampleData
 
 interface NodeDiagramProps {
@@ -43,7 +43,9 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
     return (
         <div
             ref={containerElem}
-            className={className ?? className + ' ' + 'node_diagram_styles'}
+            className={
+                className ?? className + ' ' + styles.node_diagram_styles
+            }
             style={{ ...DEFAULT_CONTAINER_STYLE, ...containerStyle }}
         >
             {title && <h1 className="diagram_title">{title}</h1>}

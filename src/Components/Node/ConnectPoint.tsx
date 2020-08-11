@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { DEFAULT_FONTSIZE } from '../constants'
+import './ConnectPoint.styl'
 
 interface ConnectPointProps {
     name: string
