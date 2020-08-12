@@ -82,6 +82,43 @@ const Node: React.FC<NodeProps> = (props) => {
         window.removeEventListener('pointerup', moveEndHandler)
     }
 
+    const inputPoints = React.useMemo(() => {
+        const inputPoints = inputs.reduce(
+            (res: { [key: string]: NodeVec2 }, input, index) => {
+                const pos = new NodeVec2(0, (index * 2 + 3) * fontSize.current)
+                res[input.name] = pos
+                return res
+            },
+            {},
+        )
+        return inputPoints
+    }, [inputs])
+
+    React.useEffect(() => {
+        updateNodeUIState(nid, { inputs: inputPoints })
+    }, [inputPoints, nid, updateNodeUIState])
+
+    const outputPoints = React.useMemo(() => {
+        const outputPoints = outputs.reduce(
+            (res: { [key: string]: NodeVec2 }, input, index) => {
+                const pos = new NodeVec2(
+                    size.x,
+                    size.y -
+                        (outputs.length - 0.5) * 2 * fontSize.current +
+                        index * 2 * fontSize.current,
+                )
+                res[input.name] = pos
+                return res
+            },
+            {},
+        )
+        return outputPoints
+    }, [outputs, size])
+
+    React.useEffect(() => {
+        updateNodeUIState(nid, { outputs: outputPoints })
+    }, [outputPoints, nid, updateNodeUIState])
+
     return (
         <g
             transform={`translate(${location.x} ${location.y})`}
@@ -106,36 +143,30 @@ const Node: React.FC<NodeProps> = (props) => {
                 {title}
             </text>
 
-            <g transform={`translate(0 ${fontSize.current * 3})`}>
+            <g>
                 {inputs.map((input, index) => {
                     const { name, type } = input
+                    const pos = inputPoints[name]
                     return (
                         <ConnectPoint
                             key={name}
                             name={name}
-                            transform={`translate(0 ${
-                                index * 2 * fontSize.current
-                            })`}
+                            transform={`translate(${pos.x} ${pos.y})`}
                             size={fontSize.current}
                         />
                     )
                 })}
             </g>
 
-            <g
-                transform={`translate(${size.x} ${
-                    size.y - (outputs.length - 0.5) * 2 * fontSize.current
-                })`}
-            >
+            <g>
                 {outputs.map((output, index) => {
                     const { name, type } = output
+                    const pos = outputPoints[name]
                     return (
                         <ConnectPoint
                             key={name}
                             name={name}
-                            transform={`translate(0 ${
-                                index * 2 * fontSize.current
-                            })`}
+                            transform={`translate(${pos.x} ${pos.y})`}
                             size={fontSize.current}
                             isOutput
                         />

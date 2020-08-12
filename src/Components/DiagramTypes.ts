@@ -16,4 +16,6 @@ export interface NodeData {
 export interface ConnectionData {
     from_node: number
     from: string
+    to_node: number
+    to: string
 }

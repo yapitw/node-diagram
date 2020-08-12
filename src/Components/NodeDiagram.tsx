@@ -55,8 +55,8 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
                 viewBox={`0 0 ${windowInfo.width} ${windowInfo.height}`}
             >
                 <DiagramProvider nodes={nodes} connections={connections}>
-                    <NodeContainer />
                     <ConnectionContainer />
+                    <NodeContainer />
                 </DiagramProvider>
             </svg>
         </div>

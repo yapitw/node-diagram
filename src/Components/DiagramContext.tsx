@@ -1,12 +1,15 @@
 import * as React from 'react'
 import { DEFAULT_FONTSIZE } from './constants'
 import { NodeData, ConnectionData } from './DiagramTypes'
+import NodeVec2 from './NodeVec2'
 
 interface NodeUIState {
     width?: number
     height?: number
     x?: number
     y?: number
+    inputs?: { [key: string]: NodeVec2 }
+    outputs?: { [key: string]: NodeVec2 }
 }
 
 type DiagramContextState = {
