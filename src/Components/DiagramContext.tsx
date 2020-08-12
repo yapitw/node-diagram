@@ -1,16 +1,21 @@
 import * as React from 'react'
 import { DEFAULT_FONTSIZE } from './constants'
 import { NodeData, ConnectionData } from './DiagramTypes'
+
+interface NodeUIState {
+    width?: number
+    height?: number
+    x?: number
+    y?: number
+}
+
 type DiagramContextState = {
     baseSize: number
     scale: number
     nodes: NodeData[]
     connections: ConnectionData[]
     nodeUIState: {
-        [key: number]: {
-            width: number
-            height: number
-        }
+        [key: number]: NodeUIState
     }
 }
 
@@ -50,21 +55,24 @@ export const DiagramProvider: React.FC<{
 export const useDiagramProvider = () => {
     const [state, setState] = React.useContext(DiagramContext)
 
-    const updateNodeUIState = (
-        nid: number,
-        newState: { width: number; height: number },
-    ) => {
-        setState((state) => {
-            const nodeUIState = {
-                ...state.nodeUIState,
-                [nid]: newState,
-            }
-            return {
-                ...state,
-                ...nodeUIState,
-            }
-        })
-    }
+    const updateNodeUIState = React.useCallback(
+        (nid: number, newState: NodeUIState) => {
+            return setState((state) => {
+                const nodeUIState = {
+                    ...state.nodeUIState,
+                    [nid]: {
+                        ...(state.nodeUIState[nid] ?? {}),
+                        ...newState,
+                    },
+                }
+                return {
+                    ...state,
+                    nodeUIState,
+                }
+            })
+        },
+        [setState],
+    )
 
     return {
         state,

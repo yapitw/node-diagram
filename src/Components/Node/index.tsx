@@ -3,6 +3,7 @@ import ConnectPoint from './ConnectPoint'
 import NodeVec2 from '../NodeVec2'
 import { DEFAULT_FONTSIZE, DEFAULT_NODE_STYLE } from '../constants'
 import { ConnectPort } from '../DiagramTypes'
+import { useDiagramProvider } from '../DiagramContext'
 
 interface NodeProps {
     title?: string
@@ -25,6 +26,7 @@ const Node: React.FC<NodeProps> = (props) => {
         width = 150,
         height = 200,
         nodeStyle = DEFAULT_NODE_STYLE,
+        nid,
         x = 0,
         y = 0,
         inputs = [],
@@ -32,14 +34,18 @@ const Node: React.FC<NodeProps> = (props) => {
     } = props
 
     const fontSize = React.useRef(DEFAULT_FONTSIZE)
-
     const titleElem = React.useRef<SVGTextElement>(null)
+    const { updateNodeUIState } = useDiagramProvider()
 
+    const [moving, setMoving] = React.useState(false)
     const [location, setLocation] = React.useState<NodeVec2>(new NodeVec2())
     const [size, setSize] = React.useState<NodeVec2>(
         new NodeVec2(width, height),
     )
-    const [moving, setMoving] = React.useState(false)
+
+    React.useEffect(() => {
+        console.log(`node: ${nid} mounted`)
+    }, [nid])
 
     React.useEffect(() => {
         setLocation(new NodeVec2(x, y))
@@ -49,11 +55,15 @@ const Node: React.FC<NodeProps> = (props) => {
                 return new NodeVec2(titleWidth, size.y)
             })
         }
-    }, [x, y])
+    }, [x, y, width])
 
     React.useEffect(() => {
-        // update node info
-    }, [moving])
+        updateNodeUIState(nid, { x: location.x, y: location.y })
+    }, [nid, location, updateNodeUIState])
+
+    React.useEffect(() => {
+        updateNodeUIState(nid, { width: size.x, height: size.y })
+    }, [nid, size, updateNodeUIState])
 
     const moveStartHandler = () => {
         setMoving(true)
