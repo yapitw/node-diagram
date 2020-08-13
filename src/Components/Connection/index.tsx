@@ -1,11 +1,11 @@
 import * as React from 'react'
-import NodeVec2 from '../NodeVec2'
+import Vec2 from '../NodeVec2'
 import './Connection.styl'
 
 interface ConnectionProps {
-    from: NodeVec2
-    to: NodeVec2
-    stops?: NodeVec2[]
+    from: Vec2
+    to: Vec2
+    stops?: Vec2[]
 }
 
 const Connection: React.FC<ConnectionProps> = (props) => {

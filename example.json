@@ -3,7 +3,7 @@
         {
             "nid": 0,
             "type": "Timer",
-            "x": 89,
+            "x": 50,
             "y": 82,
             "fields": {
                 "in": [
@@ -17,7 +17,7 @@
         {
             "nid": 1,
             "type": "MathMult",
-            "x": 284,
+            "x": 250,
             "y": 82,
             "fields": {
                 "in": [
@@ -30,8 +30,8 @@
         {
             "nid": 2,
             "type": "Vector3",
-            "x": 486,
-            "y": 188,
+            "x": 500,
+            "y": 300,
             "fields": {
                 "in": [
                     { "name": "pos", "type": "number" },

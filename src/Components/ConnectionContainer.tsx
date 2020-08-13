@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { useDiagramProvider } from './DiagramContext'
 import Connection from './Connection/index'
-import NodeVec2 from './NodeVec2'
+import Vec2 from './NodeVec2'
 
 const ConnectionContainer = () => {
     const {
@@ -22,8 +22,8 @@ const ConnectionContainer = () => {
                 if (!(fromPoint && toPoint)) {
                     return null
                 }
-                const fromPos = new NodeVec2(fromNode.x, fromNode.y)
-                const toPos = new NodeVec2(toNode.x, toNode.y)
+                const fromPos = new Vec2(fromNode.x, fromNode.y)
+                const toPos = new Vec2(toNode.x, toNode.y)
                 return (
                     <Connection
                         from={fromPos.add(fromPoint)}

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import ConnectPoint from './ConnectPoint'
-import NodeVec2 from '../NodeVec2'
+import Vec2 from '../NodeVec2'
 import { DEFAULT_FONTSIZE, DEFAULT_NODE_STYLE } from '../constants'
 import { ConnectPort } from '../DiagramTypes'
 import { useDiagramProvider } from '../DiagramContext'
@@ -38,22 +38,18 @@ const Node: React.FC<NodeProps> = (props) => {
     const { updateNodeUIState } = useDiagramProvider()
 
     const [moving, setMoving] = React.useState(false)
-    const [location, setLocation] = React.useState<NodeVec2>(new NodeVec2())
-    const [size, setSize] = React.useState<NodeVec2>(
-        new NodeVec2(width, height),
-    )
+    const [location, setLocation] = React.useState<Vec2>(new Vec2(x, y))
+    const [size, setSize] = React.useState<Vec2>(new Vec2(width, height))
 
     React.useEffect(() => {
         console.log(`node: ${nid} mounted`)
     }, [nid])
 
     React.useEffect(() => {
-        setLocation(new NodeVec2(x, y))
+        setLocation(new Vec2(x, y))
         const titleWidth = titleElem.current.getBoundingClientRect().width + 10
         if (titleWidth > width) {
-            setSize((size) => {
-                return new NodeVec2(titleWidth, size.y)
-            })
+            setSize((size) => new Vec2(titleWidth, size.y))
         }
     }, [x, y, width])
 
@@ -72,7 +68,7 @@ const Node: React.FC<NodeProps> = (props) => {
     }
 
     const moveHandler = (event: PointerEvent) => {
-        const movement = new NodeVec2(event.movementX, event.movementY)
+        const movement = new Vec2(event.movementX, event.movementY)
         setLocation((location) => location.add(movement))
     }
 
@@ -84,8 +80,8 @@ const Node: React.FC<NodeProps> = (props) => {
 
     const inputPoints = React.useMemo(() => {
         const inputPoints = inputs.reduce(
-            (res: { [key: string]: NodeVec2 }, input, index) => {
-                const pos = new NodeVec2(0, (index * 2 + 3) * fontSize.current)
+            (res: { [key: string]: Vec2 }, input, index) => {
+                const pos = new Vec2(0, (index * 2 + 3) * fontSize.current)
                 res[input.name] = pos
                 return res
             },
@@ -100,8 +96,8 @@ const Node: React.FC<NodeProps> = (props) => {
 
     const outputPoints = React.useMemo(() => {
         const outputPoints = outputs.reduce(
-            (res: { [key: string]: NodeVec2 }, input, index) => {
-                const pos = new NodeVec2(
+            (res: { [key: string]: Vec2 }, input, index) => {
+                const pos = new Vec2(
                     size.x,
                     size.y -
                         (outputs.length - 0.5) * 2 * fontSize.current +
