@@ -26,8 +26,8 @@ const ConnectionContainer = () => {
                 const toPos = new Vec2(toNode.x, toNode.y)
                 return (
                     <Connection
-                        from={fromPos.add(fromPoint)}
-                        to={toPos.add(toPoint)}
+                        start={fromPos.add(fromPoint)}
+                        end={toPos.add(toPoint)}
                         key={index}
                     />
                 )

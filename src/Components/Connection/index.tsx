@@ -3,18 +3,18 @@ import Vec2 from '../NodeVec2'
 import './Connection.styl'
 
 interface ConnectionProps {
-    from: Vec2
-    to: Vec2
+    start: Vec2
+    end: Vec2
     stops?: Vec2[]
 }
 
 const Connection: React.FC<ConnectionProps> = (props) => {
-    const { from, to, stops } = props
+    const { start, end, stops } = props
 
-    const extend = Math.max(60, Math.abs(from.x - to.x) / 2)
+    const extend = Math.max(60, Math.abs(start.x - end.x) / 2)
     const d = `
-        M ${from.x} ${from.y} C ${from.x + extend} ${from.y},
-        ${to.x - extend} ${to.y}, ${to.x} ${to.y}
+        M ${start.x} ${start.y} C ${start.x + extend} ${start.y},
+        ${end.x - extend} ${end.y}, ${end.x} ${end.y}
      `
     return (
         <path
