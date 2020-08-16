@@ -122,9 +122,9 @@ const Node: React.FC<NodeProps> = (props) => {
         >
             <rect
                 width={size.x}
-                height={fontSize.current * 2}
-                className="node_drag_area"
+                height={size.y}
                 onMouseDown={moveStartHandler}
+                style={nodeStyle}
             />
 
             <text

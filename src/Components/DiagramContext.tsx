@@ -14,8 +14,8 @@ interface NodeUIState {
 
 interface ConnectionCreationState {
     creating?: boolean
-    start?: NodeVec2
-    end?: NodeVec2
+    start?: Vec2
+    end?: Vec2
     from_node?: string
     from?: string
     to_node?: string
@@ -92,7 +92,7 @@ export const useDiagramProvider = () => {
     )
 
     const startConnectionCreation = React.useCallback(
-        (start: NodeVec2) => {
+        (start: Vec2) => {
             setState((state) => {
                 const connectionCreation = {
                     creating: true,
