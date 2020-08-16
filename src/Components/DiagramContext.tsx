@@ -12,6 +12,16 @@ interface NodeUIState {
     outputs?: { [key: string]: NodeVec2 }
 }
 
+interface ConnectionCreationState {
+    creating?: boolean
+    start?: NodeVec2
+    end?: NodeVec2
+    from_node?: string
+    from?: string
+    to_node?: string
+    to?: string
+}
+
 type DiagramContextState = {
     baseSize: number
     scale: number
@@ -20,6 +30,7 @@ type DiagramContextState = {
     nodeUIState: {
         [key: number]: NodeUIState
     }
+    connectionCreation: ConnectionCreationState
 }
 
 export const defaultDiagramContext: DiagramContextState = {
@@ -28,6 +39,9 @@ export const defaultDiagramContext: DiagramContextState = {
     nodes: [],
     connections: [],
     nodeUIState: {},
+    connectionCreation: {
+        creating: false,
+    },
 }
 
 type DiagramContextValue = [
@@ -71,6 +85,23 @@ export const useDiagramProvider = () => {
                 return {
                     ...state,
                     nodeUIState,
+                }
+            })
+        },
+        [setState],
+    )
+
+    const startConnectionCreation = React.useCallback(
+        (start: NodeVec2) => {
+            setState((state) => {
+                const connectionCreation = {
+                    creating: true,
+                    start,
+                }
+
+                return {
+                    ...state,
+                    connectionCreation,
                 }
             })
         },

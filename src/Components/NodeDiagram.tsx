@@ -56,6 +56,7 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
             >
                 <DiagramProvider nodes={nodes} connections={connections}>
                     <ConnectionContainer />
+                    {/* <ConnectionCreation /> */}
                     <NodeContainer />
                 </DiagramProvider>
             </svg>
