@@ -120,8 +120,6 @@ const Node: React.FC<NodeProps> = (props) => {
             transform={`translate(${location.x} ${location.y})`}
             style={{ fontSize: fontSize.current }}
         >
-            <rect width={size.x} height={height} style={nodeStyle} />
-
             <rect
                 width={size.x}
                 height={fontSize.current * 2}
@@ -134,13 +132,12 @@ const Node: React.FC<NodeProps> = (props) => {
                 x={size.x / 2}
                 y={fontSize.current * 1.5}
                 className="node_title"
-                onMouseDown={moveStartHandler}
             >
                 {title}
             </text>
 
             <g>
-                {inputs.map((input, index) => {
+                {inputs.map((input) => {
                     const { name, type } = input
                     const pos = inputPoints[name]
                     return (

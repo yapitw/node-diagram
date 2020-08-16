@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useDiagramProvider } from './DiagramContext'
-import Node from './Node'
+import Node from './Node/index'
 
 const NodeContainer = () => {
     const { state } = useDiagramProvider()
