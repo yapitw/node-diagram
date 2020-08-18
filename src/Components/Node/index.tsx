@@ -67,14 +67,20 @@ const Node: React.FC<NodeProps> = (props) => {
         updateNodeUIState(nid, { width: size.x, height: size.y })
     }, [nid, size, updateNodeUIState])
 
-    const moveStartHandler = () => {
+    const pointerOffset = React.useRef(new Vec2())
+
+    const moveStartHandler = (event: React.PointerEvent) => {
+        pointerOffset.current = new Vec2(
+            -(event.clientX - location.x),
+            -(event.clientY - location.y),
+        )
         window.addEventListener('pointermove', moveHandler)
         window.addEventListener('pointerup', moveEndHandler)
     }
 
     const moveHandler = (event: PointerEvent) => {
-        const movement = new Vec2(event.movementX, event.movementY)
-        setLocation((location) => location.add(movement))
+        const newLocation = new Vec2(event.clientX, event.clientY)
+        setLocation(newLocation.add(pointerOffset.current))
     }
 
     const moveEndHandler = () => {
@@ -135,7 +141,7 @@ const Node: React.FC<NodeProps> = (props) => {
             <rect
                 width={size.x}
                 height={size.y}
-                onMouseDown={moveStartHandler}
+                onPointerDown={moveStartHandler}
                 style={nodeStyle}
             />
 

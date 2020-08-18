@@ -5,7 +5,7 @@ import NodeDiagram from './Components/NodeDiagram'
 const App = () => {
     return (
         <div className="App">
-            <NodeDiagram title="NODE DIAGRAM" />
+            <NodeDiagram title="NODE UI" />
         </div>
     )
 }

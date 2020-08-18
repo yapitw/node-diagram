@@ -18,11 +18,11 @@ const ConnectionCreation: React.FC = () => {
 
     const handlePointerUp = React.useCallback(() => {
         createNewConnection()
+        setEndPoint(undefined)
     }, [createNewConnection])
 
     React.useEffect(() => {
         if (creating) {
-            setEndPoint(undefined)
             window.addEventListener('pointermove', handlePointerMove)
             window.addEventListener('pointerup', handlePointerUp)
         } else {
