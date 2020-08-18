@@ -35,7 +35,11 @@ const Node: React.FC<NodeProps> = (props) => {
 
     const fontSize = React.useRef(DEFAULT_FONTSIZE)
     const titleElem = React.useRef<SVGTextElement>(null)
-    const { updateNodeUIState } = useDiagramProvider()
+    const {
+        updateNodeUIState,
+        setConnectionStartPoint,
+        setConnectionEndPoint,
+    } = useDiagramProvider()
 
     const [moving, setMoving] = React.useState(false)
     const [location, setLocation] = React.useState<Vec2>(new Vec2(x, y))
@@ -146,6 +150,20 @@ const Node: React.FC<NodeProps> = (props) => {
                             name={name}
                             transform={`translate(${pos.x} ${pos.y})`}
                             size={fontSize.current}
+                            onPointerEnter={() => {
+                                setConnectionEndPoint({
+                                    end: location.add(pos),
+                                    to_node: nid,
+                                    to: name,
+                                })
+                            }}
+                            onPointerLeave={() => {
+                                setConnectionEndPoint({
+                                    end: undefined,
+                                    to_node: undefined,
+                                    to: undefined,
+                                })
+                            }}
                         />
                     )
                 })}
@@ -162,6 +180,13 @@ const Node: React.FC<NodeProps> = (props) => {
                             transform={`translate(${pos.x} ${pos.y})`}
                             size={fontSize.current}
                             isOutput
+                            onPointerDown={() => {
+                                setConnectionStartPoint({
+                                    start: location.add(pos),
+                                    from_node: nid,
+                                    from: name,
+                                })
+                            }}
                         />
                     )
                 })}

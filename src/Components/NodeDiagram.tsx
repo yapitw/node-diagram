@@ -3,6 +3,7 @@ import { DiagramProvider } from './DiagramContext'
 import { DEFAULT_CONTAINER_STYLE } from './constants'
 import NodeContainer from './NodeContainer'
 import ConnectionContainer from './ConnectionContainer'
+import ConnectionCreation from './ConnectionCreation'
 import styles from './NodeDiagram.styl'
 import sampleData from '../../example.json'
 
@@ -56,7 +57,7 @@ const NodeDiagram: React.FC<NodeDiagramProps> = (props) => {
             >
                 <DiagramProvider nodes={nodes} connections={connections}>
                     <ConnectionContainer />
-                    {/* <ConnectionCreation /> */}
+                    <ConnectionCreation />
                     <NodeContainer />
                 </DiagramProvider>
             </svg>

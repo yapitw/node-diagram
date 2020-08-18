@@ -7,18 +7,28 @@ interface ConnectPointProps {
     transform: string
     size: number
     isOutput?: boolean
+    onPointerDown?: () => void
+    onPointerEnter?: () => void
+    onPointerLeave?: () => void
 }
 const ConnectPoint: React.FC<ConnectPointProps> = (props) => {
-    const { name, transform, size = DEFAULT_FONTSIZE, isOutput } = props
-
-    const [hovered, setHovered] = React.useState(false)
+    const {
+        name,
+        transform,
+        size = DEFAULT_FONTSIZE,
+        isOutput,
+        onPointerDown,
+        onPointerEnter,
+        onPointerLeave,
+    } = props
 
     return (
         <g
             transform={transform}
             className="connect_dot"
-            onPointerEnter={() => setHovered(true)}
-            onPointerLeave={() => setHovered(false)}
+            onPointerDown={onPointerDown}
+            onPointerEnter={onPointerEnter}
+            onPointerLeave={onPointerLeave}
         >
             <circle cx={0} cy={0} r={size * 0.6} strokeWidth={1.5}></circle>
 

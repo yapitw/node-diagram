@@ -16,9 +16,9 @@ interface ConnectionCreationState {
     creating?: boolean
     start?: Vec2
     end?: Vec2
-    from_node?: string
+    from_node?: number
     from?: string
-    to_node?: string
+    to_node?: number
     to?: string
 }
 
@@ -91,12 +91,61 @@ export const useDiagramProvider = () => {
         [setState],
     )
 
-    const startConnectionCreation = React.useCallback(
-        (start: Vec2) => {
+    const createNewConnection = React.useCallback(
+        (connection?: ConnectionData) => {
+            setState((state) => {
+                const connections = [...state.connections]
+                if (connection) {
+                    connections.push(connection)
+                }
+                return {
+                    ...state,
+                    connections,
+                    connectionCreation: { creating: false },
+                }
+            })
+        },
+        [setState],
+    )
+
+    interface SetConnectionStartPointParams {
+        start: Vec2
+        from_node: number
+        from: string
+    }
+    const setConnectionStartPoint = React.useCallback(
+        ({ start, from_node, from }: SetConnectionStartPointParams) => {
             setState((state) => {
                 const connectionCreation = {
                     creating: true,
                     start,
+                    from_node,
+                    from,
+                }
+
+                return {
+                    ...state,
+                    connectionCreation,
+                }
+            })
+        },
+        [setState],
+    )
+
+    interface setConnectionEndPointParams {
+        end: Vec2
+        to_node: number
+        to: string
+    }
+
+    const setConnectionEndPoint = React.useCallback(
+        ({ end, to_node, to }: setConnectionEndPointParams) => {
+            setState((state) => {
+                const connectionCreation = {
+                    ...state.connectionCreation,
+                    end,
+                    to_node,
+                    to,
                 }
 
                 return {
@@ -111,6 +160,9 @@ export const useDiagramProvider = () => {
     return {
         state,
         updateNodeUIState,
+        setConnectionStartPoint,
+        setConnectionEndPoint,
+        createNewConnection,
     }
 }
 
