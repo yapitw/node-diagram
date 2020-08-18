@@ -36,18 +36,20 @@ const Node: React.FC<NodeProps> = (props) => {
     const fontSize = React.useRef(DEFAULT_FONTSIZE)
     const titleElem = React.useRef<SVGTextElement>(null)
     const {
+        state: {
+            connectionCreation: { creating },
+        },
         updateNodeUIState,
         setConnectionStartPoint,
         setConnectionEndPoint,
     } = useDiagramProvider()
 
-    const [moving, setMoving] = React.useState(false)
     const [location, setLocation] = React.useState<Vec2>(new Vec2(x, y))
     const [size, setSize] = React.useState<Vec2>(new Vec2(width, height))
 
-    React.useEffect(() => {
-        console.log(`node: ${nid} mounted`)
-    }, [nid])
+    // React.useEffect(() => {
+    //     console.log(`node: ${nid} mounted`)
+    // }, [nid])
 
     React.useEffect(() => {
         setLocation(new Vec2(x, y))
@@ -66,7 +68,6 @@ const Node: React.FC<NodeProps> = (props) => {
     }, [nid, size, updateNodeUIState])
 
     const moveStartHandler = () => {
-        setMoving(true)
         window.addEventListener('pointermove', moveHandler)
         window.addEventListener('pointerup', moveEndHandler)
     }
@@ -77,7 +78,6 @@ const Node: React.FC<NodeProps> = (props) => {
     }
 
     const moveEndHandler = () => {
-        setMoving(false)
         window.removeEventListener('pointermove', moveHandler)
         window.removeEventListener('pointerup', moveEndHandler)
     }
@@ -119,6 +119,14 @@ const Node: React.FC<NodeProps> = (props) => {
         updateNodeUIState(nid, { outputs: outputPoints })
     }, [outputPoints, nid, updateNodeUIState])
 
+    const handlePointerLeave = () => {
+        setConnectionEndPoint({
+            end: undefined,
+            to_node: undefined,
+            to: undefined,
+        })
+    }
+
     return (
         <g
             transform={`translate(${location.x} ${location.y})`}
@@ -144,26 +152,27 @@ const Node: React.FC<NodeProps> = (props) => {
                 {inputs.map((input) => {
                     const { name, type } = input
                     const pos = inputPoints[name]
+
+                    const handlePointerEnter = () => {
+                        setConnectionEndPoint({
+                            end: location.add(pos),
+                            to_node: nid,
+                            to: name,
+                        })
+                    }
+
                     return (
                         <ConnectPoint
                             key={name}
                             name={name}
                             transform={`translate(${pos.x} ${pos.y})`}
                             size={fontSize.current}
-                            onPointerEnter={() => {
-                                setConnectionEndPoint({
-                                    end: location.add(pos),
-                                    to_node: nid,
-                                    to: name,
-                                })
-                            }}
-                            onPointerLeave={() => {
-                                setConnectionEndPoint({
-                                    end: undefined,
-                                    to_node: undefined,
-                                    to: undefined,
-                                })
-                            }}
+                            onPointerEnter={
+                                creating ? handlePointerEnter : undefined
+                            }
+                            onPointerLeave={
+                                creating ? handlePointerLeave : undefined
+                            }
                         />
                     )
                 })}
@@ -173,6 +182,13 @@ const Node: React.FC<NodeProps> = (props) => {
                 {outputs.map((output, index) => {
                     const { name, type } = output
                     const pos = outputPoints[name]
+                    const handlePointerDown = () => {
+                        setConnectionStartPoint({
+                            start: location.add(pos),
+                            from_node: nid,
+                            from: name,
+                        })
+                    }
                     return (
                         <ConnectPoint
                             key={name}
@@ -180,13 +196,7 @@ const Node: React.FC<NodeProps> = (props) => {
                             transform={`translate(${pos.x} ${pos.y})`}
                             size={fontSize.current}
                             isOutput
-                            onPointerDown={() => {
-                                setConnectionStartPoint({
-                                    start: location.add(pos),
-                                    from_node: nid,
-                                    from: name,
-                                })
-                            }}
+                            onPointerDown={handlePointerDown}
                         />
                     )
                 })}

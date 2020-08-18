@@ -12,19 +12,17 @@ const ConnectionCreation: React.FC = () => {
     const [endPoint, setEndPoint] = React.useState<Vec2>()
 
     const handlePointerMove = React.useCallback((event: PointerEvent) => {
-        console.log(event)
-        console.log(event.clientX, event.clientY)
         setEndPoint(new Vec2(event.clientX, event.clientY))
         return
     }, [])
 
     const handlePointerUp = React.useCallback(() => {
-        setEndPoint(undefined)
         createNewConnection()
     }, [createNewConnection])
 
     React.useEffect(() => {
         if (creating) {
+            setEndPoint(undefined)
             window.addEventListener('pointermove', handlePointerMove)
             window.addEventListener('pointerup', handlePointerUp)
         } else {
@@ -33,8 +31,8 @@ const ConnectionCreation: React.FC = () => {
         }
     }, [creating, handlePointerMove, handlePointerUp])
 
-    return creating && start && endPoint ? (
-        <Connection start={start} end={end ?? endPoint} />
+    return creating && start && (end || endPoint) ? (
+        <Connection start={start} end={end ?? endPoint} isCreation />
     ) : null
 }
 

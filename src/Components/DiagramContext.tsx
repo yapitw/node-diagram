@@ -2,6 +2,7 @@ import * as React from 'react'
 import { DEFAULT_FONTSIZE } from './constants'
 import { NodeData, ConnectionData } from './DiagramTypes'
 import Vec2 from './NodeVec2'
+import ConnectionCreation from './ConnectionCreation'
 
 interface NodeUIState {
     width?: number
@@ -91,22 +92,25 @@ export const useDiagramProvider = () => {
         [setState],
     )
 
-    const createNewConnection = React.useCallback(
-        (connection?: ConnectionData) => {
-            setState((state) => {
-                const connections = [...state.connections]
-                if (connection) {
-                    connections.push(connection)
-                }
-                return {
-                    ...state,
-                    connections,
-                    connectionCreation: { creating: false },
-                }
-            })
-        },
-        [setState],
-    )
+    const createNewConnection = React.useCallback(() => {
+        setState((state) => {
+            const { from, from_node, to, to_node } = state.connectionCreation
+            const connections = [...state.connections]
+            if (
+                from !== undefined &&
+                from_node !== undefined &&
+                to !== undefined &&
+                to_node !== undefined
+            ) {
+                connections.push({ from, from_node, to, to_node })
+            }
+            return {
+                ...state,
+                connections,
+                connectionCreation: { creating: false },
+            }
+        })
+    }, [setState])
 
     interface SetConnectionStartPointParams {
         start: Vec2

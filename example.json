@@ -60,18 +60,6 @@
             "from": "out",
             "to_node": 2,
             "to": "x"
-        },
-        {
-            "from_node": 1,
-            "from": "out",
-            "to_node": 2,
-            "to": "y"
-        },
-        {
-            "from_node": 1,
-            "from": "out",
-            "to_node": 2,
-            "to": "z"
         }
     ]
 }
