@@ -1,8 +1,8 @@
+import { isEqual } from 'lodash'
 import * as React from 'react'
 import { DEFAULT_FONTSIZE } from './constants'
 import { NodeData, ConnectionData } from './DiagramTypes'
 import Vec2 from './NodeVec2'
-import ConnectionCreation from './ConnectionCreation'
 
 interface NodeUIState {
     width?: number
@@ -96,18 +96,24 @@ export const useDiagramProvider = () => {
         setState((state) => {
             const { from, from_node, to, to_node } = state.connectionCreation
             const connections = [...state.connections]
+
             if (
-                from !== undefined &&
-                from_node !== undefined &&
-                to !== undefined &&
-                to_node !== undefined
+                from === undefined ||
+                from_node === undefined ||
+                to === undefined ||
+                to_node === undefined ||
+                connections.find((connection) =>
+                    isEqual(connection, { from, from_node, to, to_node }),
+                )
             ) {
+                return { ...state, connectionCreation: { creating: false } }
+            } else {
                 connections.push({ from, from_node, to, to_node })
-            }
-            return {
-                ...state,
-                connections,
-                connectionCreation: { creating: false },
+                return {
+                    ...state,
+                    connections,
+                    connectionCreation: { creating: false },
+                }
             }
         })
     }, [setState])
@@ -145,17 +151,20 @@ export const useDiagramProvider = () => {
     const setConnectionEndPoint = React.useCallback(
         ({ end, to_node, to }: setConnectionEndPointParams) => {
             setState((state) => {
-                const connectionCreation = {
-                    ...state.connectionCreation,
-                    end,
-                    to_node,
-                    to,
+                if (to_node !== state.connectionCreation.from_node) {
+                    const connectionCreation = {
+                        ...state.connectionCreation,
+                        end,
+                        to_node,
+                        to,
+                    }
+                    return {
+                        ...state,
+                        connectionCreation,
+                    }
                 }
 
-                return {
-                    ...state,
-                    connectionCreation,
-                }
+                return state
             })
         },
         [setState],
