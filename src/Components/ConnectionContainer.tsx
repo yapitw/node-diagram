@@ -13,8 +13,8 @@ const ConnectionContainer = () => {
             {connections.map((connection, index) => {
                 const { from_node, from, to_node, to } = connection
 
-                const fromNode = nodeUIState[from_node] ?? {}
-                const toNode = nodeUIState[to_node] ?? {}
+                const fromNode = nodeUIState[from_node]
+                const toNode = nodeUIState[to_node]
 
                 const fromPoint = fromNode?.outputs?.[from]
                 const toPoint = toNode?.inputs?.[to]

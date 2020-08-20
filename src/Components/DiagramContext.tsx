@@ -4,22 +4,20 @@ import { DEFAULT_FONTSIZE } from './constants'
 import { NodeData, ConnectionData, NodeID } from './DiagramTypes'
 import Vec2 from './NodeVec2'
 
-interface NodeUIState extends Partial<NodeData> {
+interface NodeUIState {
     width?: number
     height?: number
+    x?: number
+    y?: number
     inputs?: { [key: string]: Vec2 }
     outputs?: { [key: string]: Vec2 }
     selected?: boolean
 }
 
-interface ConnectionCreationState {
+interface ConnectionCreationState extends Partial<ConnectionData> {
     creating?: boolean
     start?: Vec2
     end?: Vec2
-    from_node?: NodeID
-    from?: string
-    to_node?: NodeID
-    to?: string
 }
 
 type DiagramContextState = {
@@ -27,10 +25,11 @@ type DiagramContextState = {
     scale: number
     nodes: NodeData[]
     connections: ConnectionData[]
+    connectionCreation: ConnectionCreationState
+    selectedNodes: string[]
     nodeUIState: {
         [key: string]: NodeUIState
     }
-    connectionCreation: ConnectionCreationState
 }
 
 export const defaultDiagramContext: DiagramContextState = {
@@ -39,6 +38,7 @@ export const defaultDiagramContext: DiagramContextState = {
     nodes: [],
     connections: [],
     nodeUIState: {},
+    selectedNodes: [],
     connectionCreation: {
         creating: false,
     },
@@ -73,12 +73,12 @@ export const useDiagramProvider = () => {
     const [state, setState] = React.useContext(DiagramContext)
 
     const updateNodeUIState = React.useCallback(
-        (nid: NodeID, newState: NodeUIState) => {
+        (nid: NodeID, newState: Partial<NodeUIState>) => {
             return setState((state) => {
                 const nodeUIState = {
                     ...state.nodeUIState,
                     [nid]: {
-                        ...(state.nodeUIState[nid] ?? {}),
+                        ...state.nodeUIState[nid],
                         ...newState,
                     },
                 }
@@ -97,16 +97,20 @@ export const useDiagramProvider = () => {
             const connections = [...state.connections]
 
             if (
+                // any property not defined
                 from === undefined ||
                 from_node === undefined ||
                 to === undefined ||
                 to_node === undefined ||
+                // connection exist
                 connections.find((connection) =>
                     isEqual(connection, { from, from_node, to, to_node }),
                 )
             ) {
+                // cancel creation
                 return { ...state, connectionCreation: { creating: false } }
             } else {
+                // add connection
                 connections.push({ from, from_node, to, to_node })
                 return {
                     ...state,
