@@ -2,7 +2,7 @@ import * as React from 'react'
 import ConnectPoint from './ConnectPoint'
 import Vec2 from '../NodeVec2'
 import { DEFAULT_FONTSIZE, DEFAULT_NODE_STYLE } from '../constants'
-import { ConnectPort } from '../DiagramTypes'
+import { ConnectPort, NodeID } from '../DiagramTypes'
 import { useDiagramProvider } from '../DiagramContext'
 
 interface NodeProps {
@@ -13,7 +13,7 @@ interface NodeProps {
 
     type: string
     fontSize?: number
-    nid: number
+    nid: NodeID
     x: number
     y: number
     inputs: ConnectPort[]

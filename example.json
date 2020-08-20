@@ -1,7 +1,7 @@
 {
     "nodes": [
         {
-            "nid": 0,
+            "nid": "0",
             "type": "Timer",
             "x": 50,
             "y": 82,
@@ -15,7 +15,7 @@
             }
         },
         {
-            "nid": 1,
+            "nid": "1",
             "type": "MathMult",
             "x": 250,
             "y": 82,
@@ -28,7 +28,7 @@
             }
         },
         {
-            "nid": 2,
+            "nid": "2",
             "type": "Vector3",
             "x": 500,
             "y": 300,
@@ -50,15 +50,15 @@
     ],
     "connections": [
         {
-            "from_node": 0,
+            "from_node": "0",
             "from": "out",
-            "to_node": 1,
+            "to_node": "1",
             "to": "in"
         },
         {
-            "from_node": 1,
+            "from_node": "1",
             "from": "out",
-            "to_node": 2,
+            "to_node": "2",
             "to": "x"
         }
     ]

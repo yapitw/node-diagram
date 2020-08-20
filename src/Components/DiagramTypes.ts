@@ -1,9 +1,10 @@
+export type NodeID = string
 export interface ConnectPort {
     name: string
     type: string
 }
 export interface NodeData {
-    nid: number
+    nid: NodeID
     type: string
     x: number
     y: number
@@ -14,8 +15,8 @@ export interface NodeData {
 }
 
 export interface ConnectionData {
-    from_node: number
+    from_node: NodeID
     from: string
-    to_node: number
+    to_node: NodeID
     to: string
 }

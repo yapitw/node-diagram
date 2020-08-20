@@ -1,25 +1,24 @@
 import { isEqual } from 'lodash'
 import * as React from 'react'
 import { DEFAULT_FONTSIZE } from './constants'
-import { NodeData, ConnectionData } from './DiagramTypes'
+import { NodeData, ConnectionData, NodeID } from './DiagramTypes'
 import Vec2 from './NodeVec2'
 
-interface NodeUIState {
+interface NodeUIState extends Partial<NodeData> {
     width?: number
     height?: number
-    x?: number
-    y?: number
     inputs?: { [key: string]: Vec2 }
     outputs?: { [key: string]: Vec2 }
+    selected?: boolean
 }
 
 interface ConnectionCreationState {
     creating?: boolean
     start?: Vec2
     end?: Vec2
-    from_node?: number
+    from_node?: NodeID
     from?: string
-    to_node?: number
+    to_node?: NodeID
     to?: string
 }
 
@@ -29,7 +28,7 @@ type DiagramContextState = {
     nodes: NodeData[]
     connections: ConnectionData[]
     nodeUIState: {
-        [key: number]: NodeUIState
+        [key: string]: NodeUIState
     }
     connectionCreation: ConnectionCreationState
 }
@@ -74,7 +73,7 @@ export const useDiagramProvider = () => {
     const [state, setState] = React.useContext(DiagramContext)
 
     const updateNodeUIState = React.useCallback(
-        (nid: number, newState: NodeUIState) => {
+        (nid: NodeID, newState: NodeUIState) => {
             return setState((state) => {
                 const nodeUIState = {
                     ...state.nodeUIState,
@@ -120,7 +119,7 @@ export const useDiagramProvider = () => {
 
     interface SetConnectionStartPointParams {
         start: Vec2
-        from_node: number
+        from_node: NodeID
         from: string
     }
     const setConnectionStartPoint = React.useCallback(
@@ -144,7 +143,7 @@ export const useDiagramProvider = () => {
 
     interface setConnectionEndPointParams {
         end: Vec2
-        to_node: number
+        to_node: NodeID
         to: string
     }
 
